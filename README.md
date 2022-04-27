@@ -5,7 +5,7 @@ git clone https://github.com/6oP/exrate.git <br>
 cd exrate<br>
 ./gradlew run<br>
 <br>
-Excpect to xee smht like this:<br>
+Excpect to see smht like this:<br>
 <pre>
 > Task :run
 2022-04-28 00:16:49.766 [main] INFO  ktor.application - Autoreload is disabled because the development mode is off.
