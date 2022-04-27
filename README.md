@@ -1,10 +1,12 @@
 
-git clone https://github.com/6oP/exrate.git
-cd exrate
-./gradlew run
+exceute commands: 
 
-➜  exrate git:(master) ./gradlew run
-
+git clone https://github.com/6oP/exrate.git <br>
+cd exrate<br>
+./gradlew run<br>
+<br>
+Excpect to xee smht like this:<br>
+<pre>
 > Task :run
 2022-04-28 00:16:49.766 [main] INFO  ktor.application - Autoreload is disabled because the development mode is off.
 2022-04-28 00:16:49.849 [main] DEBUG i.m.c.u.i.l.InternalLoggerFactory - Using SLF4J as the default logging framework
@@ -13,7 +15,7 @@ cd exrate
 2022-04-28 00:16:50.089 [DefaultDispatcher-worker-2] INFO  ktor.application - Responding at http://0.0.0.0:8080
 <==========---> 80% EXECUTING [31s]
 > :run
-
+</pre>
 
 To test rate exchange API:
 GET http://0.0.0.0:8080/exchangeRates/NZD?symbols=USD
