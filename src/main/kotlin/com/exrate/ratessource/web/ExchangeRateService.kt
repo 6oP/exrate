@@ -21,9 +21,9 @@ object ExchangeRateService {
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
-    private val cache: LoadingCache<GetRatesQuery, Deferred<Result<Any>>> = CacheBuilder.newBuilder()
+    private val cache: LoadingCache<GetRatesQuery, Deferred<Result<Rates>>> = CacheBuilder.newBuilder()
         .maximumSize(1000)
-        .expireAfterAccess(15, TimeUnit.SECONDS)
+        .expireAfterWrite(15, TimeUnit.SECONDS)
         .build(
             CacheLoader.from { key: GetRatesQuery ->
                 // TODO change to another more appropriate scope
@@ -33,7 +33,7 @@ object ExchangeRateService {
             }
         )
 
-    suspend fun getRates(query: GetRatesQuery): Result<Any> {
+    suspend fun getRates(query: GetRatesQuery): Result<Rates> {
         return cache.getUnchecked(query).await()
     }
 
