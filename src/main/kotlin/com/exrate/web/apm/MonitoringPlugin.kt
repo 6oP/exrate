@@ -1,6 +1,5 @@
-package plugins
+package com.exrate.web.apm
 
-import com.exrate.ratessource.web.apm.Metrics
 import io.ktor.server.application.*
 import io.ktor.server.metrics.micrometer.*
 import io.ktor.server.response.*

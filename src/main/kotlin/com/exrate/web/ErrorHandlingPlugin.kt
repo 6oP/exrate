@@ -1,4 +1,4 @@
-package com.exrate.ratessource.web
+package com.exrate.web
 
 import io.ktor.http.*
 import io.ktor.server.application.*
