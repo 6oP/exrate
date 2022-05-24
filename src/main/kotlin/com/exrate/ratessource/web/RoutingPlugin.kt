@@ -17,7 +17,6 @@ fun Application.configureRouting() {
 
 
         get("/convertAmount") {
-            // TODO treat getting prams with corresponding 404
             val base = call.request.queryParameters["from"]!!
             val symbols = call.request.queryParameters["to"]!!
             val amount = call.request.queryParameters["amount"]

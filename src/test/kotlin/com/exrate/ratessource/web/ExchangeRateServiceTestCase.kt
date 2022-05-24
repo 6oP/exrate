@@ -23,7 +23,7 @@ internal class ExchangeRateServiceTestCase {
         val ratesQuery = GetRatesQuery("NZD", listOf("EUR"))
 
         coEvery { ExchangeRateService.queryExternal(ratesQuery) } returns Result.success(Rates(mapOf("USD" to 0.67.toBigDecimal())))
-//        coEvery { ExchangeRateService.cache.get(ratesQuery)} returns CompletableDeferred(Result.failure(Exception("THE CACHE BLEW UP!")))
+//        coEvery { ExchangeRateService.cache.get(ratesQuery)} returns CompletableDeferred(Result.success(Rates(mapOf("USD" to 0.67.toBigDecimal()))))
 
         val result = runBlocking {
             ExchangeRateService.convert(ratesQuery, 10000.0)
