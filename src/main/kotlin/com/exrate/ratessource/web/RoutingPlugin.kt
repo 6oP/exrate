@@ -1,5 +1,6 @@
 package com.exrate.ratessource.web
 
+import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -12,6 +13,28 @@ fun Application.configureRouting() {
             val query = getQueryFromUrl()
             val rates = ExchangeRateService.getRates(query).getOrThrow()
             call.respond(rates)
+        }
+
+
+        get("/convertAmount") {
+            // TODO treat getting prams with corresponding 404
+            val base = call.request.queryParameters["from"]!!
+            val symbols = call.request.queryParameters["to"]!!
+            val amount = call.request.queryParameters["amount"]
+
+
+            val result = ExchangeRateService.convert(GetRatesQuery(base, symbols.split(",")), amount!!.toDouble())
+
+            if (result.isSuccess) {
+                call.respond(result.getOrThrow())
+            } else {
+                val ex = result.exceptionOrNull()!!
+                val exClassName = ex.javaClass.name
+                call.respondText(
+                    "$exClassName: ${ex.message}",
+                    status = HttpStatusCode.ServiceUnavailable
+                )
+            }
         }
     }
 }

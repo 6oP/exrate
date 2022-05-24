@@ -36,8 +36,11 @@ dependencies {
     implementation("io.ktor:ktor-server-content-negotiation:$ktor_version")
     implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
-
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
+    testImplementation("io.mockk:mockk:1.12.4")
 
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+    implementation("org.jetbrains.kotlin:kotlin-test:1.6.21")
+
 }

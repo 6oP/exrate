@@ -21,7 +21,7 @@ object ExchangeRateService {
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
-    private val cache: LoadingCache<GetRatesQuery, Deferred<Result<Rates>>> = CacheBuilder.newBuilder()
+    val cache: LoadingCache<GetRatesQuery, Deferred<Result<Rates>>> = CacheBuilder.newBuilder()
         .maximumSize(1000)
         .expireAfterWrite(15, TimeUnit.SECONDS)
         .build(
@@ -37,7 +37,8 @@ object ExchangeRateService {
         return cache.getUnchecked(query).await()
     }
 
-    private suspend fun queryExternal(query: GetRatesQuery): Result<Rates> {
+
+    suspend fun queryExternal(query: GetRatesQuery): Result<Rates> {
         return coroutineScope {
             ratesRepositories.map { repository ->
                 async {
@@ -47,6 +48,19 @@ object ExchangeRateService {
                 }
             }
         }.awaitFirstSuccess()
+    }
+
+
+    suspend fun convert(query: GetRatesQuery, value: Double): Result<Any> {
+        val rates: Result<Rates> = cache.getUnchecked(query).await() as Result<Rates>
+
+        val converted = rates.getOrNull()!!.rates
+
+        if (rates.isFailure) {
+            return rates
+        }
+
+        return Result.success(Rates(converted.mapValues { it.value.multiply(value.toBigDecimal()) }))
     }
 }
 
